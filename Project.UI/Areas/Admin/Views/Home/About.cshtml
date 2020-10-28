@@ -1,0 +1,38 @@
+﻿@model About
+@{
+    ViewData["Title"] = "About";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Orders -->
+<div class="orders">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="box-title">Edit About</h4>
+                </div>
+                <div class="card-body--">
+                    <div class="table-stats  ov-h">
+                        <div class="container">
+                            <form asp-area="Admin" asp-controller="Home" asp-action="About" method="post" enctype="multipart/form-data">
+                                @foreach (var ab in ViewBag.content)
+                                {
+                                    <input type="hidden" name="aboutId" value="@ab.aboutId" />
+                                     <div class="form-group">
+                                         <textarea name="aboutContent" class="form-control" style="min-height:100%">@ab.aboutContent</textarea>
+                                     </div>
+                                }
+
+                                <br /><br /><br />
+                                <input type="submit" class="btn btn-outline-success" value="Save" />
+                                <br /><br /><br />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

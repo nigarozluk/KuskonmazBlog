@@ -1,0 +1,67 @@
+﻿@model List<Project.Entities.Post>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<!-- Orders -->
+<div class="orders">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="box-title">Posts</h4>
+                </div>
+                <div class="card-body--">
+                    <div class="table-stats order-table ov-h">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th class="serial">#</th>
+                                    <th class="avatar">Image</th>
+                                    <th>Title</th>
+                                    <th>Views</th>
+                                    <th>Likes</th>
+                                    <th>Comments</th>
+                                    <th>Post Detail</th>
+                                    <th>Edit Post</th>
+                                    <th>Delete Post</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var post in Model)
+                                {
+                                <tr>
+                                    <td class="serial">@post.postId</td>
+                                    <td class="avatar">
+                                        <div class="round-img">
+                                            <a href="#"><img class="rounded-circle" src="~/adminmaster/images/avatar/@post.postImage" alt=""></a>
+                                        </div>
+                                    </td>
+                                    <td>@post.postTitle</td>
+                                    <td><span class="count">@post.Views</span></td>
+                                    <td><span class="count">@post.Likes</span></td>
+                                    <td><span class="count">@ViewBag.count[post.postId]</span></td>
+                                    <td>
+                                        <a href="/Admin/Post/PostDetail/@post.postId" class="badge badge-complete">Detail</a>
+                                    </td>
+                                    <td>
+                                        <a href="/Admin/Post/EditPost/@post.postId" class="badge badge-complete">Edit</a>
+                                    </td>
+                                    <td>
+                                        <a href="/Admin/Post/DeletePost/@post.postId" class="badge badge-complete">Delete</a>
+                                    </td>
+                                </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div> <!-- /.table-stats -->
+                </div>
+            </div> <!-- /.card -->
+        </div>
+
+    </div>
+</div>
+<!-- /.orders -->

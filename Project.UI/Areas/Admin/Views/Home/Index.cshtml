@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+ <link rel="stylesheet" href="/css/style.css">
+<!-- ##### Contact Area Start ##### -->
+<section class="contact-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-content-area" style="position:initial">
+                    <div class="row">
+
+                        <div class="col-12 col-lg-6">
+                            <div class="contact-content">
+                                <h4>Get In Touch</h4>
+
+                                <!-- Contact Form Area -->
+                                <div class="contact-form-area">
+
+                                    <div class="row">
+                                        <div class="col-12 col-lg-12">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" id="contact-email" placeholder="Email">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="message" id="mail-message" cols="30" rows="10" placeholder="Message"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <input type="submit" id="mailsend" class="btn foode-btn" value="Send" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6">
+                            <div class="contact-content contact-information">
+                                <h4>Information</h4>
+                                <form asp-area="Admin" asp-controller="Home" asp-action="EditContact" method="post" enctype="multipart/form-data">
+                                    @foreach (var c in ViewBag.contact)
+                                    {
+                                        <input type="hidden" name="contactId" value="@c.contactId" />
+                                        <!-- Single Contact Info -->
+                                        <div class="single-contact-info d-flex">
+                                            <div class="icon">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            </div>
+                                            <input type="text" value="@c.contactAddress" name="contactAddress" />
+                                        </div>
+
+                                        <!-- Single Contact Info -->
+                                        <div class="single-contact-info d-flex">
+                                            <div class="icon">
+                                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                            </div>
+                                            <input type="text" value="@c.contactPhonemumber" name="contactPhonemumber" />
+                                        </div>
+
+                                        <!-- Single Contact Info -->
+                                        <div class="single-contact-info d-flex">
+                                            <div class="icon">
+                                                <i class="fa fa-print" aria-hidden="true"></i>
+                                            </div>
+                                            <input type="text" value="@c.contactFax" name="contactFax" />
+                                        </div>
+
+                                        <!-- Single Contact Info -->
+                                        <div class="single-contact-info d-flex">
+                                            <div class="icon">
+                                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                            </div>
+                                            <input type="text" value="@c.contactMail" name="contactMail" />
+                                        </div>
+
+
+                                        <div class="single-contact-info d-flex">
+                                            <div class="icon">
+                                                <i class="" aria-hidden="true"></i>
+                                            </div>
+                                                <input type="submit" class="btn foode-btn" value="Save" />
+                                        </div>
+
+                                    }
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section JS {
+    <!-- <script src="~/adminmaster/js/jquery-1.2.6.pack.js"></script> -->
+    <script>
+        jQuery("#mailsend").click(function () {
+            let email = jQuery("#contact-email").val();
+            let msg = jQuery("#mail-message").val();
+
+            jQuery.ajax({
+                url : "@Url.Action("SendMail", "Home")",
+                type : "POST",
+                data : {
+                    "senderMail": email,
+                    "content":msg
+                },
+                success: function () {
+                    alert("Mail sent successfuly.")
+                },
+                error: function () {
+                    alert("Mail sending error!")
+                }
+            });
+
+        });
+    </script>
+}

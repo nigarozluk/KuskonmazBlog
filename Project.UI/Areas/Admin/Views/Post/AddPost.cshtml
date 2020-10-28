@@ -1,0 +1,120 @@
+﻿@model Project.Entities.Post
+@{
+    ViewData["Title"] = "AddPost";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+    <link href="~/css/upload-image-plugin.css" rel="stylesheet" />
+<div class="orders">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="box-title">Add Post </h4>
+                </div>
+                <div class="card-body--">
+                    <div class="table-stats  ov-h">
+
+                        <div class="container">
+                            <form asp-area="Admin" asp-controller="Post" asp-action="AddPost" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label asp-for="postTitle">Title</label>
+                                    <input asp-for="postTitle" name="postTitle" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="postDescription">Decription</label>
+                                    <input asp-for="postDescription" name="postDescription" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="postContent">Content</label>
+                                    <textarea asp-for="postContent" name="postContent" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="PostCategories">Category</label>
+                                    <select name="categories" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
+                                        @foreach (var category in ViewBag.CategoryList)
+                                        {
+                                            <option value=" @category.categoryId">
+                                                @category.categoryName
+                                            </option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="PostTags">Tags</label>
+                                    <select name="tags" class="js-example-tags" multiple="multiple" style="width: 100%">
+                                        @foreach (var tag in ViewBag.TagList)
+                                        {
+                                            <option value="@tag.tagName">
+                                                @tag.tagName
+                                            </option>
+
+                                        }
+
+                                    </select>
+                                </div>
+
+                                <br /><br /><br />
+
+                                <div class="js--image-wrapper">
+                                    <div class="js--box-image">
+                                        <div class="js--image-preview"></div>
+                                        <div class="upload-options">
+                                            <label>
+                                                <input type="file" class="image-upload" name="file" accept="image/*" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br /><br /><br />
+                                <input type="submit" class="btn btn-primary" value="Save" />
+                                <br /><br /><br />
+                            </form>
+                        </div>
+
+                    </div> <!-- /.table-stats -->
+                </div>
+            </div> <!-- /.card -->
+        </div>
+
+    </div>
+</div>
+@section JS {
+
+    <script>
+        jQuery(document).ready(function () {
+            thumb = document.querySelector(".js--box-image .js--image-preview")
+            thumb.style.backgroundImage = 'url(/adminmaster/images/nophoto.png)';
+            thumb.className += ' js--no-default';
+
+            var uploadField = document.querySelector(".js--box-image .image-upload");
+            uploadField.addEventListener("change", function (e) {
+                let file = e.currentTarget.files[0];
+                var thumb = document.querySelector(".js--box-image .js--image-preview")
+
+                reader = new FileReader();
+                reader.onload = function () {
+                    thumb.style.backgroundImage = 'url(' + reader.result + ')';
+                }
+                reader.readAsDataURL(file);
+                thumb.className += ' js--no-default';
+            })
+        });
+    </script>
+
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('.js-example-basic-multiple').select2();
+            jQuery(".js-example-tags").select2({
+                tags: true
+            });
+        });
+
+    </script>
+
+
+}
+
+
+
+

@@ -1,0 +1,146 @@
+﻿@model Project.UI.Areas.Admin.Models.PostDetail_ViewModel
+@{
+    ViewData["Title"] = "PostDetail";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .body {
+        font-family: Arial;
+        font-size: 17px;
+    }
+
+    .containerimg {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+        .containerimg img {
+            vertical-align: middle;
+        }
+
+        .containerimg .contentimg {
+            position: absolute;
+            bottom: 0;
+            background: rgb(0, 0, 0); /* Fallback color */
+            background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+            color: #f1f1f1;
+            width: 100%;
+            padding: 20px;
+        }
+
+    .thumbnail {
+        padding: 0px;
+    }
+
+    .panel {
+        position: relative;
+    }
+
+        .panel > .panel-heading:after, .panel > .panel-heading:before {
+            position: absolute;
+            top: 11px;
+            left: -16px;
+            right: 100%;
+            width: 0;
+            height: 0;
+            display: block;
+            content: " ";
+            border-color: transparent;
+            border-style: solid solid outset;
+            pointer-events: none;
+        }
+
+        .panel > .panel-heading:after {
+            border-width: 7px;
+            border-right-color: #f7f7f7;
+            margin-top: 1px;
+            margin-left: 2px;
+        }
+
+        .panel > .panel-heading:before {
+            border-right-color: #ddd;
+            border-width: 8px;
+        }
+</style>
+<!-- Orders -->
+<div class="orders">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="containerimg">
+                    <img src="~/adminmaster/images/@Model.post.postImage" alt="@Model.post.postImage" style="width:100%;">
+                    <div class="contentimg">
+                        <h1>@Model.post.postTitle</h1>
+                        <p>
+                            <b>Category:</b>
+                            @foreach (var item in Model.Categories)
+                            {
+                                <a hreh="#">@item.categoryName</a>
+                            }
+                        </p>
+                        <p>
+                            <b>Tag:</b>
+                            @foreach (var item in Model.Tags)
+                            {
+                                <a hreh="#">@item.tagName</a>
+                            }
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="content">
+                    <div class="text">
+                        @Model.post.postContent
+                    </div>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Comments ( @Model.post.Comments.Count)</h3>
+                        </div><!-- /col-sm-12 -->
+                    </div><!-- /row -->
+                    <br /><br /><br />
+                    @foreach (var comment in Model.post.Comments)
+                    {
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <div class="thumbnail">
+                                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                </div><!-- /thumbnail -->
+                            </div><!-- /col-sm-1 -->
+
+                            <div class="col-sm-5">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>@comment.User.userName</strong> <span class="text-muted">@comment.ReleaseDate</span>
+                                    </div>
+                                    <div class="panel-body">
+                                        @comment.commentContent
+                                    </div><!-- /panel-body -->
+                                </div><!-- /panel panel-default -->
+                            </div><!-- /col-sm-5 -->
+                            <a href="@Url.Action("DeleteComment", "Post", new { id = @comment.commentID })"> Remove <i class="fa" aria-hidden="true"></i></a>
+                        </div>
+                    }
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /.orders -->

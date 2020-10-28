@@ -1,0 +1,439 @@
+﻿@model Project.UI.Areas.Admin.Models.IndexViewModel
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>Kuskonmaz</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/images/favicon.ico">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+    <!-- ##### Preloader ##### -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="circle-preloader">
+            <img src="~/images/logo .png" alt="">
+            <div class="foode-preloader">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+
+        <!-- Top Header Area -->
+        <div class="top-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="top-header-content d-flex align-items-center justify-content-between">
+                            <!-- Search Form -->
+                            <div class="search-form">
+                                <form action="#" method="get">
+                                    <input type="search" name="search" class="form-control" placeholder="Search and hit enter...">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+
+                            <!-- Social Button -->
+                            <div class="top-social-info">
+                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logo Area -->
+        <div class="logo-area text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Nav brand -->
+                        <a href="/Home/Index" class="nav-brand"><img src="~/images/logo.png" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navbar Area -->
+        <div class="foode-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar" id="foodeNav">
+
+                        <!-- Nav brand -->
+                        <a href="/Home/Index" class="nav-brand"><img src="~/images/logo.png" alt=""></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- close btn -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li><a href="/Home/Index">Home</a></li>
+                                    <li>
+                                        <a href="#">Category</a>
+                                        <div class="megamenu">
+                                            <ul class="single-mega cn-col-12">
+                                                @foreach (var category in Model.Categories)
+                                                {
+                                                    <li><a href="/Home/CategoryPostList/@category.categoryId">@category.categoryName</a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                    <li><a href="/Home/About">About</a></li>
+                                    <li><a href="/Home/Contact">Contact</a></li>
+                                </ul>
+
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+    <!-- ##### Hero Area Start ##### -->
+    <section class="hero-area">
+        <div class="hero-post-slides owl-carousel">
+
+            <!-- Single Hero Post -->
+            @foreach (var img in Model.MostLikes)
+            {
+                <div class="single-hero-post">
+                    <!-- Post Image -->
+                    <a href="/Home/SinglePost/@img.postId">
+                        <img class="slide-img bg-img" src="~/adminmaster/images/@img.postImage" alt="@img.postImage">
+                    </a>
+                    <!-- Post Content -->
+                    <div class="hero-slides-content">
+                        <p>@img.dateAdded.ToString("dd MMMM yyyy")/ <i class="fa fa-heart-o"></i> @img.Likes </p>
+                        <a href="/Home/SinglePost/@img.postId" class="post-title">
+                            <h4>@img.postDescription</h4>
+                        </a>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </section>
+    <!-- ##### Hero Area End ##### -->
+    <!-- ##### Blog Content Area Start ##### -->
+    <section class="blog-content-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <!-- Featured Post Area -->
+                <div class="col-12">
+                    <div class="featured-post-area">
+                        <div id="featured-post-slides" class="carousel slide d-flex flex-wrap" data-ride="carousel">
+
+                            <div class="carousel-inner">
+
+                                @{
+                                    List<Post> mostLiked = Model.MostLikes;
+                                }
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    <div class="carousel-item @(i == 0 ? "active" : "") bg-img" style="background-image:url('/adminmaster/images/@(mostLiked[i].postImage)')">
+                                        <!-- Featured Post Content -->
+                                        <div class="featured-post-content">
+                                            <p>
+                                                @(mostLiked[i].dateAdded.ToString("dd MMMM yyyy")) /
+
+                                                @(string.Join(",", ViewBag.cat[mostLiked[i].postId]))
+
+                                            </p>
+                                            <a href="/Home/SinglePost/@(mostLiked[i].postId)" class="post-title">
+                                                <h2>@(mostLiked[i].postDescription)</h2>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <ol class="carousel-indicators">
+
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    <li data-target="#featured-post-slides" data-slide-to="@i" class="@(i == 0 ? "active" : "")">
+                                        <h2>@(i + 1)</h2>
+                                        <a href="/Home/SinglePost/@(mostLiked[i].postId)" class="post-title">
+                                            <h5>@(mostLiked[i].postDescription)</h5>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ol>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <!-- Blog Posts Area -->
+                <div class="col-12 col-lg-8">
+                    <div class="blog-posts-area">
+
+                        @*@foreach (var item in (ViewBag.PostList as List<Post>).OrderByDescending(_ => _.dateAdded).Take(4))*@
+                        @foreach (var item in Model.dataAdded)
+                        {
+                            <!-- Single Blog Post -->
+                            <div class="single-blog-post d-flex flex-wrap mt-50">
+                                <!-- Thumbnail -->
+                                <div class="post-thumbnail mb-50">
+                                    <a href="/Home/SinglePost/@item.postId"><img src="/adminmaster/images/@item.postImage" alt=""></a>
+                                </div>
+                                <!-- Content -->
+                                <div class="post-content mb-50">
+                                    <p class="post-date">
+                                        @item.dateAdded.ToString("dd MMMM yyyy")/
+
+                                        @(string.Join(",", ViewBag.cat[item.postId]))
+                                    </p>
+                                    <a href="/Home/SinglePost/@item.postId" class="post-title">
+                                        <h4>@item.postDescription</h4>
+                                    </a>
+                                    <div class="post-meta">
+                                        <a href="#"><i class="fa fa-comment"></i> @ViewBag.count[item.postId]</a>
+                                        <a href="#"><i class="fa fa-eye"></i> @item.Views</a>
+                                        <a href="#"><i class="fa fa-heart-o"></i> @item.Likes</a>
+                                    </div>
+
+                                    @if (item.postContent.Length >= 150)
+                                    {
+                                        <p class="post-excerpt">@item.postContent.Substring(0, 150) ...</p>
+                                        <a href="/Home/SinglePost/@item.postId" class="read-more-btn">Continue Reading <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <p class="post-excerpt">@item.postContent</p>
+
+                                    }
+
+                                </div>
+                                <!-- Post Curve Line -->
+                                <img class="post-curve-line" src="/images/post-curve-line.png" alt="">
+                            </div>
+                        }
+
+
+                    </div>
+
+                    <!-- Pager -->
+                    <ol class="foode-pager mt-50">
+                        @if (Model.currentPage != 1)
+                        {
+                            <li><a href="@Url.Action("Index", "Home", new { page = Model.currentPage - 1 })"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Newer</a></li>
+                        }
+                        @if (Model.currentPage != Model.totalPageCount)
+                        {
+                            <li><a href="@Url.Action("Index", "Home", new { page = Model.currentPage + 1 })">Older <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                        }
+                    </ol>
+                </div>
+
+                <!-- Blog Sidebar Area -->
+                <div class="col-12 col-sm-9 col-md-6 col-lg-4">
+                    <div class="post-sidebar-area">
+
+                        <!-- ##### Single Widget Area ##### -->
+                        <div class="single-widget-area">
+                            <!-- Title -->
+                            <div class="widget-title">
+                                <h6>About Me</h6>
+                            </div>
+
+                            <!-- Content -->
+                            @foreach (var item in Model.Abouts)
+                            {
+
+
+                                @if (item.aboutContent.Length >= 100)
+                                {
+                                    <div class="widget-content text-center">
+                                        <p>@item.aboutContent.Substring(0, 100) ...</p>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="widget-content text-center">
+                                        <img src="/images/signature.png" alt="">
+                                        <p>@item.aboutContent</p>
+                                    </div>
+
+                                }
+
+                            }
+
+                        </div>
+
+                        <!-- ##### Single Widget Area ##### -->
+                        <div class="single-widget-area">
+                            <!-- Title -->
+                            <div class="widget-title">
+                                <h6>Subscribe &amp; Follow</h6>
+                            </div>
+                            <!-- Widget Social Info -->
+                            <div class="widget-social-info text-center">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-google-plus"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-rss"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- ##### Single Widget Area ##### -->
+                        <div class="single-widget-area">
+                            <!-- Title -->
+                            <div class="widget-title">
+                                <h6>Best Views</h6>
+                            </div>
+
+                            @foreach (var item in Model.MostViews)
+                            {
+                                <!-- Single Latest Posts -->
+                                <div class="single-latest-post d-flex">
+                                    <div class="post-thumb">
+                                        <a href="/Home/SinglePost/@item.postId"><img src="/adminmaster/images/@item.postImage" alt=""></a>
+                                    </div>
+                                    <div class="post-content">
+                                        <a href="/Home/SinglePost/@item.postId" class="post-title">
+                                            <h6>@item.postDescription</h6>
+                                        </a>
+                                        <a href="#" class="post-author">@item.Views <span>Views /</span> @item.dateAdded.ToString("MMMM yyyy") </a>
+                                    </div>
+                                </div>
+                            }
+
+
+
+
+                            <!-- ##### Single Widget Area ##### -->
+                            <div class="single-widget-area mt-0">
+                                <!-- Title -->
+                                <div class="widget-title">
+                                    <h6>Categories</h6>
+                                </div>
+                                <ol class="foode-catagories">
+                                    @foreach (var category in Model.Categories)
+                                    {
+                                        <li><a href="/Home/CategoryPostList/@category.categoryId"><span><i class="fa fa-stop" aria-hidden="true"></i>@category.categoryName</span> <span>(@category.PostCategories.Count)</span></a></li>
+                                    }
+                                </ol>
+                            </div>
+
+                            <!-- ##### Single Widget Area ##### -->
+                            <div class="single-widget-area">
+                                <!-- Title -->
+                                <div class="widget-title">
+                                    <h6>popular tags</h6>
+                                </div>
+                                <!-- Tags -->
+                                <ol class="popular-tags d-flex flex-wrap">
+
+                                    @foreach (var tag in Model.Tags)
+                                    {
+                                        <li><a href="/Home/TagPostList/@tag.tagId">@tag.tagName (@tag.PostTags.Count)</a></li>
+                                    }
+
+
+                                </ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Blog Content Area End ##### -->
+    <!-- ##### Instagram Area Start ##### -->
+    <!-- ##### Instagram Area End ##### -->
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Footer Curve Line -->
+                    <img class="footer-curve" src="~/images/foo-curve.png" alt="">
+                    <!-- Footer Social Info -->
+                    <div class="footer-social-info d-flex align-items-center justify-content-between">
+                        <a href="#"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+                        <a href="#"><i class="fa fa-twitter"></i><span>Twitter</span></a>
+                        <a href="#"><i class="fa fa-google-plus"></i><span>Google +</span></a>
+                        <a href="#"><i class="fa fa-linkedin"></i><span>linkedin</span></a>
+                        <a href="#"><i class="fa fa-instagram"></i><span>Instagram</span></a>
+                        <a href="#"><i class="fa fa-vimeo"></i><span>Vimeo</span></a>
+                        <a href="#"><i class="fa fa-youtube"></i><span>Youtube</span></a>
+                    </div>
+                    <!-- Footer Curve Line -->
+                    <img class="footer-curve" src="~/images/foo-curve.png" alt="">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="copywrite-text">
+                        <p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area Start ##### -->
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="/Bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="/Bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="/js/plugins.js"></script>
+    <!-- Active js -->
+    <script src="/js/active.js"></script>
+</body>
+
+</html>
